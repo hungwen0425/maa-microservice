@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.atguigu.yygh.user.mapper.PatientMapper">
+
+	<resultMap id="PatientMap" type="com.atguigu.yygh.model.user.Patient" autoMapping="true">
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,user_id,name,certificates_type,certificates_no,sex,birthdate,phone,is_marry,province_code,city_code,district_code,address,contacts_name,contacts_certificates_type,contacts_certificates_no,contacts_phone,is_insure,card_no,status,create_time,update_time,is_deleted
+	</sql>
+
+    <select id="selectPage" resultMap="PatientMap">
+    	select <include refid="columns" />
+	    from patient
+		<where>
+			<if test="vo.userId != null and vo.userId != ''">
+				and user_id = #{vo.userId}
+			</if>
+			<if test="vo.name != null and vo.name != ''">
+				and name = #{vo.name}
+			</if>
+			<if test="vo.certificatesType != null and vo.certificatesType != ''">
+				and certificates_type = #{vo.certificatesType}
+			</if>
+			<if test="vo.certificatesNo != null and vo.certificatesNo != ''">
+				and certificates_no = #{vo.certificatesNo}
+			</if>
+			<if test="vo.phone != null and vo.phone != ''">
+				and phone = #{vo.phone}
+			</if>
+			<if test="vo.isMarry != null and vo.isMarry != ''">
+				and is_marry = #{vo.isMarry}
+			</if>
+			<if test="vo.provinceCode != null and vo.provinceCode != ''">
+				and province_code = #{vo.provinceCode}
+			</if>
+			<if test="vo.cityCode != null and vo.cityCode != ''">
+				and city_code = #{vo.cityCode}
+			</if>
+			<if test="vo.districtCode != null and vo.districtCode != ''">
+				and district_code = #{vo.districtCode}
+			</if>
+			<if test="createTimeBegin != null and createTimeBegin != ''">
+				and create_time >= #{createTimeBegin}
+			</if>
+			<if test="createTimeEnd != null and createTimeEnd != ''">
+				and create_time &lt;= #{createTimeEnd}
+			</if>
+			and is_deleted = 0
+		</where>
+		order by id desc
+	</select>
+
+</mapper>
+

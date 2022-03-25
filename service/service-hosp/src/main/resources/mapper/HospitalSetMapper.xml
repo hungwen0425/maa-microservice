@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.atguigu.yygh.hosp.mapper.HospitalSetMapper">
+
+	<resultMap id="HospitalSetMap" type="com.atguigu.yygh.model.hosp.HospitalSet" autoMapping="true">
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,hosname,hoscode,api_url,sign_key,contacts_name,contacts_phone,status,create_time,update_time,is_deleted
+	</sql>
+
+    <select id="selectPage" resultMap="HospitalSetMap">
+    	select <include refid="columns" />
+	    from hospital_set
+		<where>
+			<if test="vo.hosname != null and vo.hosname != ''">
+				and hosname like CONCAT('%',#{vo.hosname},'%')
+			</if>
+			<if test="vo.hoscode != null and vo.hoscode != ''">
+				and hoscode = #{vo.hoscode}
+			</if>
+			and is_deleted = 0
+		</where>
+		order by id desc
+	</select>
+
+</mapper>
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.atguigu.yygh.order.mapper.OrderInfoMapper">
+
+	<resultMap id="OrderMap" type="com.atguigu.yygh.model.order.OrderInfo" autoMapping="true">
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,user_id,out_trade_no,hoscode,hosname,depcode,depname,title,hos_record_id,reserve_date,reserve_time,patient_id,patient_name,patient_phone,hos_record_id,`number`,fetch_time,fetch_address,amount,quit_time,order_status,create_time,update_time,is_deleted
+	</sql>
+
+    <select id="selectPage" resultMap="OrderMap">
+    	select <include refid="columns" />
+	    from order_info
+		<where>
+			<if test="vo.keyword != null and vo.keyword != ''">
+				and hosname CONCAT('%',#{vo.keyword},'%')
+			</if>
+			<if test="vo.userId != null">
+				and user_id = #{vo.userId}
+			</if>
+			<if test="vo.patientId != null">
+				and patient_id = #{vo.patientId}
+			</if>
+			<if test="vo.patientName != null and vo.patientName != ''">
+				and patient_name  CONCAT('%',#{vo.patientName},'%')
+			</if>
+			<if test="vo.outTradeNo != null and vo.outTradeNo != ''">
+				and out_trade_no CONCAT('%',#{vo.outTradeNo},'%')
+			</if>
+			<if test="vo.orderStatus != null and vo.orderStatus != ''">
+				and order_status = #{vo.orderStatus}
+			</if>
+			<if test="vo.reserveDate != null and vo.reserveDate != ''">
+				and reserve_date >= #{vo.reserveDate}
+			</if>
+			<if test="vo.createTimeBegin != null and vo.createTimeBegin != ''">
+				and create_time >= #{vo.createTimeBegin}
+			</if>
+			<if test="vo.createTimeEnd != null and vo.createTimeEnd != ''">
+				and create_time &lt;= #{vo.createTimeEnd}
+			</if>
+			and is_deleted = 0
+		</where>
+		order by id desc
+	</select>
+
+	<select id="selectOrderCount" resultType="com.atguigu.yygh.vo.order.OrderCountVo">
+		select reserve_date as reserveDate, count(reserve_date) as count
+		from order_info
+		<where>
+			<if test="vo.hoscode != null and vo.hoscode != ''">
+				and hoscode = #{vo.hoscode}
+			</if>
+			<if test="vo.reserveDateBegin != null and vo.reserveDateBegin != ''">
+				and reserve_date >= #{vo.reserveDateBegin}
+			</if>
+			<if test="vo.reserveDateEnd != null and vo.reserveDateEnd != ''">
+				and reserve_date &lt;= #{vo.reserveDateEnd}
+			</if>
+			and is_deleted = 0
+		</where>
+		group by reserve_date
+		order by reserve_date
+	</select>
+
+</mapper>
+

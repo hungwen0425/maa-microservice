@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: service-task
+  profiles:
+    active: dev
