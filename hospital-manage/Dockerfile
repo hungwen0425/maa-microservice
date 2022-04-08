@@ -1,5 +1,5 @@
 FROM openjdk:8-jdk
-LABEL maintainer=Tseng Hungwen
+LABEL maintainer=TsengHungWen
 
 
 #启动自行加载   服务名-prod.yml配置
