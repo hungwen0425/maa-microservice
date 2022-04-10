@@ -52,7 +52,7 @@ spring:
 #  notifyurl: http://a31ef7db.ngrok.io/WeChatPay/WeChatPayNotify
 weixin:
   appid: wx74862e0dfcf69954
-  partner: 1558950191
-  partnerkey: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+  partner: 1558950191T6m9iK73b0kn9g
+  partnerkey: 5v426MKfHQH7X8rKwb
   notifyurl: http://qyben.free.idcfengye.com/api/order/weixin/notify
   cert: C:\Users\lfy\Desktop\yygh-parent\service\service-order\src\main\resources\apiclient_cert.p12h-parent\service\service-order\src\main\resources\apiclient_cert.p12

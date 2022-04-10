@@ -43,7 +43,7 @@ public class WeixinController {
     @Autowired
     private PaymentService paymentService;
 
-    @Value("${weixin.partnerkey}")
+    //@Value("${weixin.partnerkey}")
     private String partnerkey;
 
     @ApiOperation(value = "下单 生成二维码")
