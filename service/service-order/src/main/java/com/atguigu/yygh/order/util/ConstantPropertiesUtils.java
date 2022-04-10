@@ -11,19 +11,19 @@ import org.springframework.stereotype.Component;
 public class ConstantPropertiesUtils implements InitializingBean {
 
 
-    //@Value("${weixin.appid}")
+    @Value("${weixin.appid}")
     private String appid;
 
-    //@Value("${weixin.partner}")
+    @Value("${weixin.partner}")
     private String partner;
 
-    //@Value("${weixin.partnerkey}")
+    @Value("${weixin.partnerkey}")
     private String partnerkey;
 
-    //@Value("${weixin.notifyurl}")
+    @Value("${weixin.notifyurl}")
     private String notifyurl;
 
-    //@Value("${weixin.cert}")
+    @Value("${weixin.cert}")
     private String cert;
 
     public static String APPID;
