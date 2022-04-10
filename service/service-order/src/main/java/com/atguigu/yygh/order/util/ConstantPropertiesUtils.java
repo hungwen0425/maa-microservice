@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class ConstantPropertiesUtils implements InitializingBean {
 
 
-    @Value("${weixin.appid}")
+    //@Value("${weixin.appid}")
     private String appid;
 
     @Value("${weixin.partner}")
