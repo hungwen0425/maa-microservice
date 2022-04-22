@@ -1,12 +1,21 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 server:
   port: 8207
 spring:
   cloud:
     sentinel:
       transport:
-        dashboard: 192.168.200.188:8858
+        dashboard: 139.198.114.54:8858
   rabbitmq:
-    host: 192.168.200.188
+    host: 139.198.114.54
     port: 5672
+    virtual-host: /
     username: admin
     password: admin

@@ -1,3 +1,11 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 server:
   port: 8208
 feign:
@@ -14,4 +22,4 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: http://192.168.200.188:8858
+        dashboard: http://139.198.114.54:8858

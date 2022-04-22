@@ -1,3 +1,11 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 server:
   port: 8201
 mybatis-plus:
@@ -18,21 +26,22 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: http://192.168.200.188:8858
+        dashboard: http://139.198.114.54:30162
   data:
     mongodb:
-      host: 192.168.200.188
-      port: 27017
+      host: 139.198.114.54
+      port: 32572
       database: yygh_hosps #指定操作的数据库
   rabbitmq:
-    host: 192.168.200.188
-    port: 5672
+    host: 139.198.114.54
+    port: 31862
+    virtual-host: /
     username: admin
     password: admin
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/yygh_hosp?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://139.198.114.54:31707/yygh_hosp?characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
     hikari:
@@ -47,4 +56,4 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   redis:
-    host: 192.168.200.188
+    host: 139.198.114.54:32397

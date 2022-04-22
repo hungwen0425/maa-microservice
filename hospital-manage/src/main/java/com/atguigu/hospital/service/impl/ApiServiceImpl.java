@@ -339,7 +339,7 @@ public class ApiServiceImpl implements ApiService {
             paramMap.put("timestamp", HttpRequestHelper.getTimestamp());
             paramMap.put("sign", HttpRequestHelper.getSign(paramMap, apiService.getSignKey()));
 
-            JSONObject respone = HttpRequestHelper.sendRequest(paramMap,"http://localhost/api/hosp/saveHospital");
+            JSONObject respone = HttpRequestHelper.sendRequest(paramMap,"http://139.198.114.54/api/hosp/saveHospital");
             System.out.println(respone.toJSONString());
             if(null == respone || 200 != respone.getIntValue("code")) {
                 throw new YyghException(respone.getString("message"), 201);
