@@ -14,4 +14,4 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: http://192.168.200.188:8858
+        dashboard: http://192.168.56.10:8858

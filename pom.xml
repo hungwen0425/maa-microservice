@@ -18,7 +18,7 @@
     </parent>
 
     <groupId>com.atguigu.yygh</groupId>
-    <artifactId>yygh-parent</artifactId>
+    <artifactId>maa-microservice</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 

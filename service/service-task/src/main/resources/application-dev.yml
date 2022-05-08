@@ -4,9 +4,9 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: 192.168.200.188:8858
+        dashboard: 192.168.56.10:8858
   rabbitmq:
-    host: 192.168.200.188
+    host: 192.168.56.10
     port: 5672
-    username: admin
-    password: admin
+    username: guest
+    password: guest
