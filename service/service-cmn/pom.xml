@@ -15,6 +15,16 @@
     <description>service-cmn</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.atguigu.yygh</groupId>
+            <artifactId>common-util</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atguigu.yygh</groupId>
+            <artifactId>service-cmn</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

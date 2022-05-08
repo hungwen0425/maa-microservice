@@ -18,10 +18,11 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: http://192.168.56.10:8858
+        dashboard: http://127.0.0.1:8333
   rabbitmq:
     host: 192.168.56.10
     port: 5672
+    virtual-host: /
     username: guest
     password: gyest
   datasource:
