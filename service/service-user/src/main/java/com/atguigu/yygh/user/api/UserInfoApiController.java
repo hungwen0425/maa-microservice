@@ -23,7 +23,7 @@ import java.util.Map;
  * 用户接口
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @Api(tags = "会员接口")
 @RestController

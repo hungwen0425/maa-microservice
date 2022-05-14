@@ -12,7 +12,7 @@ import lombok.Data;
  * 首页Banner实体
  * </p>
  *
- * @author qy
+ * @author hungwen
  * @since 2019-11-08
  */
 @Data

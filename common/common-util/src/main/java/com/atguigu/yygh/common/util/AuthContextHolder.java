@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 获取登录用户信息类
  *
- * @author qy
+ * @author hungwen
  */
 public class AuthContextHolder {
 

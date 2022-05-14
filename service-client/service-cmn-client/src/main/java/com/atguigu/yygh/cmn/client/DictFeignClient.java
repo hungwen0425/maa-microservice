@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * 数据字典API接口
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @FeignClient(value = "service-cmn", fallback = DictDegradeFeignClient.class)
 public interface DictFeignClient {

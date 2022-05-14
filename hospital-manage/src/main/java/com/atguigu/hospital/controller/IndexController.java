@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 
- * @author qy
+ * @author hungwen
  *
  */
 @Controller

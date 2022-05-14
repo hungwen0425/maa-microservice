@@ -28,7 +28,7 @@ import java.util.List;
  * 处理跨域
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @Configuration
 public class CorsConfig {

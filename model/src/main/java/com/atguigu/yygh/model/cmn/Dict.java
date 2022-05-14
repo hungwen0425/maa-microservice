@@ -12,7 +12,7 @@ import lombok.Data;
  * Dict
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @Data
 @ApiModel(description = "数据字典")

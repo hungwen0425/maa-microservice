@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * Swagger2配置信息
- * @author qy
+ * @author hungwen
  */
 @Configuration
 @EnableSwagger2

@@ -6,7 +6,7 @@ import java.io.InputStream;
 /**
  * StreamUtil类
  *
- * @author qy
+ * @author hungwen
  */
 public class StreamUtil {
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author qy
+ * @author hungwen
  *
  */
 @Api(tags = "医院设置管理")

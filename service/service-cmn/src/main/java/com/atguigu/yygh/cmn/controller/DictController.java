@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author qy
+ * @author hungwen
  */
 //@CrossOrigin //跨域
 @Api(tags = "数据字典管理")

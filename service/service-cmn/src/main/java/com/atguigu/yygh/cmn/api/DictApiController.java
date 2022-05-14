@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @author qy
+ * @author hungwen
  */
 @Api(tags = "数据字典管理")
 @RestController

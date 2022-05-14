@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * 会员用户API接口
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @FeignClient(value = "service-hosp", fallback = HospitalDegradeFeignClient.class)
 public interface HospitalFeignClient {

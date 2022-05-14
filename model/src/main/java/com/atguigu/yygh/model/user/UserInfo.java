@@ -12,7 +12,7 @@ import lombok.Data;
  * UserInfo
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @Data
 @ApiModel(description = "UserInfo")

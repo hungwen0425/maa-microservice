@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Mybatis plus Handler配置类
  *
- * @author qy
+ * @author hungwen
  */
 @Component
 public class CommonMetaObjectHandler implements MetaObjectHandler {

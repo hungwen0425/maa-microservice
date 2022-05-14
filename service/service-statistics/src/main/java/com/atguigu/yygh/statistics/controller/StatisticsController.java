@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 统计接口
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @Api(tags = "统计管理接口")
 @RestController

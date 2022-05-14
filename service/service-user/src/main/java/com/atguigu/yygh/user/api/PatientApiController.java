@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author qy
+ * @author hungwen
  *
  */
 @Api(tags = "就诊人接口")

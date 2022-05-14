@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * MybatisPlus配置类
  *
- * @author qy
+ * @author hungwen
  */
 @EnableTransactionManagement
 @Configuration

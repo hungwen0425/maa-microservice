@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 全局统一返回结果类
  *
- * @author qy
+ * @author hungwen
  */
 @Data
 @ApiModel(value = "全局统一返回结果")

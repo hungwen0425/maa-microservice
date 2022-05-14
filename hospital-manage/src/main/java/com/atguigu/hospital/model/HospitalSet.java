@@ -12,7 +12,7 @@ import java.io.Serializable;
  * HospitalSet
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @Data
 @ApiModel(description = "HospitalSet")

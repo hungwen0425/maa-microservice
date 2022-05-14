@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author qy
+ * @author hungwen
  *
  */
 @Api(tags = "科室管理接口")

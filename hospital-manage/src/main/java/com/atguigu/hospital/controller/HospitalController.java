@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  *
- * @author qy
+ * @author hungwen
  *
  */
 @Api(tags = "医院管理接口")

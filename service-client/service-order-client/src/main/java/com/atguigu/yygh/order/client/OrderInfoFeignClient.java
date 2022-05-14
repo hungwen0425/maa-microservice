@@ -18,7 +18,7 @@ import java.util.Map;
  * 订单API接口
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @FeignClient(value = "service-order", fallback = OrderInfoDegradeFeignClient.class)
 public interface OrderInfoFeignClient {

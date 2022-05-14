@@ -29,7 +29,7 @@ import java.util.Map;
  * 微信支付 API
  * </p>
  *
- * @author qy
+ * @author hungwen
  */
 @Api(tags = "微信支付接口")
 @RestController

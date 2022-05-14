@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
  * 2. 如果消息到达exchange,则confirm回调,ack=true
  * 3. exchange到queue成功,则不回调return
  * 4. exchange到queue失败,则回调return
- * @Author qy
+ * @author hungwen
  */
 //@Component
 //@Slf4j

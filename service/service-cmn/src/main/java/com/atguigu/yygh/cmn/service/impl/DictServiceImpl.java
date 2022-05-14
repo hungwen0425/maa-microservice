@@ -41,12 +41,32 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 	@Cacheable(value = "dict",keyGenerator = "keyGenerator")
 	@Override
 	public List<Dict> findByParentId(Long parentId) {
-        List<Dict> dictList = dictMapper.selectList(new QueryWrapper<Dict>().eq("parent_id", parentId));
+		QueryWrapper<Dict> wrapper = new QueryWrapper<Dict>();
+		wrapper.eq("parent_id", parentId);;
+
+		List<Dict> dictList = dictMapper.selectList(wrapper);
+
         dictList.stream().forEach(dict -> {
             boolean isHasChildren = this.isHasChildren(dict.getId());
             dict.setHasChildren(isHasChildren);
         });
         return dictList;
+	}
+
+	/**
+	 * 判断该节点是否有子节点
+	 * @param id
+	 * @return
+	 */
+	private boolean isHasChildren(Long id) {
+		QueryWrapper<Dict> wrapper= new QueryWrapper<Dict>();
+		wrapper.eq("parent_id", id);
+
+		Integer count = dictMapper.selectCount(wrapper);
+		if(count.intValue() > 0) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -153,17 +173,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 //		}
 //	}
 
-	/**
-	 * 判断该节点是否有子节点
-	 * @param id
-	 * @return
-	 */
-	private boolean isHasChildren(Long id) {
-		Integer count = dictMapper.selectCount(new QueryWrapper<Dict>().eq("parent_id", id));
-		if(count.intValue() > 0) {
-			return true;
-		}
-		return false;
-	}
+
 
 }
