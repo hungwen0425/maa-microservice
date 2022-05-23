@@ -1,7 +1,7 @@
 package com.atguigu.yygh.user.api;
 
 import com.alibaba.fastjson.JSONObject;
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.helper.JwtHelper;
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
@@ -70,7 +70,7 @@ public class WeixinApiController {
 
         if (StringUtils.isEmpty(state) || StringUtils.isEmpty(code)) {
             log.error("非法回调请求");
-            throw new YyghException(ResultCodeEnum.ILLEGAL_CALLBACK_REQUEST_ERROR);
+            throw new MmaException(ResultCodeEnum.ILLEGAL_CALLBACK_REQUEST_ERROR);
         }
 
         //使用code和appid以及appscrect换取access_token
@@ -90,7 +90,7 @@ public class WeixinApiController {
         try {
             result = HttpClientUtils.get(accessTokenUrl);
         } catch (Exception e) {
-            throw new YyghException(ResultCodeEnum.FETCH_ACCESSTOKEN_FAILD);
+            throw new MmaException(ResultCodeEnum.FETCH_ACCESSTOKEN_FAILD);
         }
 
         System.out.println("使用code换取的access_token结果 = " + result);
@@ -98,7 +98,7 @@ public class WeixinApiController {
         JSONObject resultJson = JSONObject.parseObject(result);
         if(resultJson.getString("errcode") != null){
             log.error("获取access_token失败：" + resultJson.getString("errcode") + resultJson.getString("errmsg"));
-            throw new YyghException(ResultCodeEnum.FETCH_ACCESSTOKEN_FAILD);
+            throw new MmaException(ResultCodeEnum.FETCH_ACCESSTOKEN_FAILD);
         }
 
         String accessToken = resultJson.getString("access_token");
@@ -121,14 +121,14 @@ public class WeixinApiController {
             try {
                 resultUserInfo = HttpClientUtils.get(userInfoUrl);
             } catch (Exception e) {
-                throw new YyghException(ResultCodeEnum.FETCH_USERINFO_ERROR);
+                throw new MmaException(ResultCodeEnum.FETCH_USERINFO_ERROR);
             }
             System.out.println("使用access_token获取用户信息的结果 = " + resultUserInfo);
 
             JSONObject resultUserInfoJson = JSONObject.parseObject(resultUserInfo);
             if(resultUserInfoJson.getString("errcode") != null){
                 log.error("获取用户信息失败：" + resultUserInfoJson.getString("errcode") + resultUserInfoJson.getString("errmsg"));
-                throw new YyghException(ResultCodeEnum.FETCH_USERINFO_ERROR);
+                throw new MmaException(ResultCodeEnum.FETCH_USERINFO_ERROR);
             }
 
             //解析用户信息

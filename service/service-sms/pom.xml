@@ -23,6 +23,12 @@
 
 		<dependency>
 			<groupId>com.atguigu.yygh</groupId>
+			<artifactId>service-util</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.atguigu.yygh</groupId>
 			<artifactId>rabbit-util</artifactId>
 			<version>1.0</version>
 		</dependency>

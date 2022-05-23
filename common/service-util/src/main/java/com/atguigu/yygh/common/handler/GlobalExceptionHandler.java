@@ -1,6 +1,6 @@
 package com.atguigu.yygh.common.handler;
 
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.result.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,9 +26,9 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(YyghException.class)
+    @ExceptionHandler(MmaException.class)
     @ResponseBody
-    public Result error(YyghException e){
+    public Result error(MmaException e){
         return Result.build(e.getCode(), e.getMessage());
     }
 }

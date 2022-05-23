@@ -1,13 +1,12 @@
 package com.atguigu.yygh.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.common.util.BeanUtils;
 import com.atguigu.yygh.hosp.repository.ScheduleRepository;
 import com.atguigu.yygh.hosp.service.DepartmentService;
 import com.atguigu.yygh.hosp.service.HospitalService;
-import com.atguigu.yygh.hosp.service.HospitalSetService;
 import com.atguigu.yygh.hosp.service.ScheduleService;
 import com.atguigu.yygh.model.hosp.BookingRule;
 import com.atguigu.yygh.model.hosp.Department;
@@ -17,7 +16,6 @@ import com.atguigu.yygh.vo.hosp.BookingScheduleRuleVo;
 import com.atguigu.yygh.vo.hosp.ScheduleOrderVo;
 import com.atguigu.yygh.vo.hosp.ScheduleQueryVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.format.DateTimeFormat;
@@ -205,7 +203,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		//获取预约规则
 		Hospital hospital = hospitalService.getByHoscode(hoscode);
 		if(null == hospital) {
-			throw new YyghException(ResultCodeEnum.DATA_ERROR);
+			throw new MmaException(ResultCodeEnum.DATA_ERROR);
 		}
 		BookingRule bookingRule = hospital.getBookingRule();
 
@@ -353,17 +351,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 		//排班信息
 		Schedule schedule = this.getById(scheduleId);
 		if(null == schedule) {
-			throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+			throw new MmaException(ResultCodeEnum.PARAM_ERROR);
 		}
 
 		//获取预约规则信息
 		Hospital hospital = hospitalService.getByHoscode(schedule.getHoscode());
 		if(null == hospital) {
-			throw new YyghException(ResultCodeEnum.DATA_ERROR);
+			throw new MmaException(ResultCodeEnum.DATA_ERROR);
 		}
 		BookingRule bookingRule = hospital.getBookingRule();
 		if(null == bookingRule) {
-			throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+			throw new MmaException(ResultCodeEnum.PARAM_ERROR);
 		}
 
 		scheduleOrderVo.setHoscode(schedule.getHoscode());

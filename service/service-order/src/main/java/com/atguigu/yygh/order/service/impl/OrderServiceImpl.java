@@ -2,7 +2,7 @@ package com.atguigu.yygh.order.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.atguigu.yygh.common.constant.MqConst;
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.helper.HttpRequestHelper;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.common.service.RabbitService;
@@ -61,26 +61,26 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 	public Long saveOrder(String scheduleId, Long patientId) {
 		Patient patient = patientFeignClient.getPatient(patientId);
 		if(null == patient) {
-			throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+			throw new MmaException(ResultCodeEnum.PARAM_ERROR);
 		}
 		ScheduleOrderVo scheduleOrderVo = hospitalFeignClient.getScheduleOrderVo(scheduleId);
 		if(null == scheduleOrderVo) {
-			throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+			throw new MmaException(ResultCodeEnum.PARAM_ERROR);
 		}
 
 		//当前时间不可以预约
 		if(new DateTime(scheduleOrderVo.getStartTime()).isAfterNow()
 				|| new DateTime(scheduleOrderVo.getEndTime()).isBeforeNow()) {
-			throw new YyghException(ResultCodeEnum.TIME_NO);
+			throw new MmaException(ResultCodeEnum.TIME_NO);
 		}
 
 		SignInfoVo signInfoVo = hospitalFeignClient.getSignInfoVo(scheduleOrderVo.getHoscode());
 		if(null == signInfoVo) {
-			throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+			throw new MmaException(ResultCodeEnum.PARAM_ERROR);
 		}
 
 		if(scheduleOrderVo.getAvailableNumber() <= 0) {
-			throw new YyghException(ResultCodeEnum.NUMBER_NO);
+			throw new MmaException(ResultCodeEnum.NUMBER_NO);
 		}
 
 		OrderInfo orderInfo = new OrderInfo();
@@ -174,7 +174,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 			orderMqVo.setMsmVo(msmVo);
 			rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_ORDER, MqConst.ROUTING_ORDER, orderMqVo);
 		} else {
-			throw new YyghException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
+			throw new MmaException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
 		}
 
 		return orderInfo.getId();
@@ -207,12 +207,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 		//当前时间大约退号时间，不能取消预约
 		DateTime quitTime = new DateTime(orderInfo.getQuitTime());
 		if(quitTime.isBeforeNow()) {
-			throw new YyghException(ResultCodeEnum.CANCEL_ORDER_NO);
+			throw new MmaException(ResultCodeEnum.CANCEL_ORDER_NO);
 		}
 
 		SignInfoVo signInfoVo = hospitalFeignClient.getSignInfoVo(orderInfo.getHoscode());
 		if(null == signInfoVo) {
-			throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+			throw new MmaException(ResultCodeEnum.PARAM_ERROR);
 		}
 
 		Map<String, Object> reqMap = new HashMap<>();
@@ -226,14 +226,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 		JSONObject result = HttpRequestHelper.sendRequest(reqMap, signInfoVo.getApiUrl()+"/order/updateCancelStatus");
 		log.info("结果：" + result.toJSONString());
 		if(result.getInteger("code") != 200) {
-			throw new YyghException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
+			throw new MmaException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
 		} else {
 			//是否支付 退款
 			if(orderInfo.getOrderStatus().intValue() == OrderStatusEnum.PAID.getStatus().intValue()) {
 				//已支付 退款
 				boolean isRefund = weixinService.refund(orderId);
 				if(!isRefund) {
-					throw new YyghException(ResultCodeEnum.CANCEL_ORDER_FAIL);
+					throw new MmaException(ResultCodeEnum.CANCEL_ORDER_FAIL);
 				}
 			}
 

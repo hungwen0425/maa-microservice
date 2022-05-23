@@ -1,7 +1,7 @@
 package com.atguigu.yygh.order.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.helper.HttpRequestHelper;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.enums.OrderStatusEnum;
@@ -66,7 +66,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void paySuccess(String outTradeNo,Integer paymentType, Map<String,String> paramMap) {
         PaymentInfo paymentInfo = this.getPaymentInfo(outTradeNo, paymentType);
         if (null == paymentInfo) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+            throw new MmaException(ResultCodeEnum.PARAM_ERROR);
         }
         if (paymentInfo.getPaymentStatus() != PaymentStatusEnum.UNPAID.getStatus()) {
             return;
@@ -88,7 +88,7 @@ public class PaymentServiceImpl implements PaymentService {
         // 调用医院接口，通知更新支付状态
         SignInfoVo signInfoVo = hospitalFeignClient.getSignInfoVo(orderInfo.getHoscode());
         if(null == signInfoVo) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+            throw new MmaException(ResultCodeEnum.PARAM_ERROR);
         }
 
         Map<String, Object> reqMap = new HashMap<>();
@@ -102,7 +102,7 @@ public class PaymentServiceImpl implements PaymentService {
         JSONObject result = HttpRequestHelper.sendRequest(reqMap, signInfoVo.getApiUrl()+"/order/updatePayStatus");
         log.info("结果：" + result.toJSONString());
         if(result.getInteger("code") != 200) {
-            throw new YyghException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
+            throw new MmaException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
         }
     }
 

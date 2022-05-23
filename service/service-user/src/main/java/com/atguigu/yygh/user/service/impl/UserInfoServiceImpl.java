@@ -1,7 +1,7 @@
 package com.atguigu.yygh.user.service.impl;
 
 import com.atguigu.yygh.cmn.client.DictFeignClient;
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.helper.JwtHelper;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.enums.AuthStatusEnum;
@@ -61,26 +61,18 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         //校验参数
         if(StringUtils.isEmpty(phone) ||
                 StringUtils.isEmpty(code)) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+            throw new MmaException(ResultCodeEnum.PARAM_ERROR);
         }
 
         //校验校验验证码
-//        String mobleCode = redisTemplate.opsForValue().get(phone);
+        String mobleCode = redisTemplate.opsForValue().get(phone);
 //        if(!code.equals(mobleCode)) {
-//            throw new YyghException(ResultCodeEnum.CODE_ERROR);
+//            throw new MmaException(ResultCodeEnum.CODE_ERROR);
 //        }
 
-        //绑定手机号码
-        UserInfo userInfo = null;
-        if(!StringUtils.isEmpty(loginVo.getOpenid())) {
-            userInfo = this.getByOpenid(loginVo.getOpenid());
-            if(null != userInfo) {
-                userInfo.setPhone(loginVo.getPhone());
-                this.updateById(userInfo);
-            } else {
-                throw new YyghException(ResultCodeEnum.DATA_ERROR);
-            }
-        }
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("phone",phone);
+        UserInfo userInfo = baseMapper.selectOne(wrapper);
 
         //userInfo=null 说明手机直接登录
         if(null == userInfo) {
@@ -98,14 +90,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
         //校验是否被禁用
         if(userInfo.getStatus() == 0) {
-            throw new YyghException(ResultCodeEnum.LOGIN_DISABLED_ERROR);
+            throw new MmaException(ResultCodeEnum.LOGIN_DISABLED_ERROR);
         }
-
-        //记录登录
-        UserLoginRecord userLoginRecord = new UserLoginRecord();
-        userLoginRecord.setUserId(userInfo.getId());
-        userLoginRecord.setIp(loginVo.getIp());
-        userLoginRecordMapper.insert(userLoginRecord);
 
         //返回页面显示名称
         Map<String, Object> map = new HashMap<>();
@@ -116,9 +102,28 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if(StringUtils.isEmpty(name)) {
             name = userInfo.getPhone();
         }
+
         map.put("name", name);
         String token = JwtHelper.createToken(userInfo.getId(), name);
         map.put("token", token);
+
+        //记录登录
+        UserLoginRecord userLoginRecord = new UserLoginRecord();
+        userLoginRecord.setUserId(userInfo.getId());
+        userLoginRecord.setIp(loginVo.getIp());
+        userLoginRecordMapper.insert(userLoginRecord);
+
+        //绑定手机号码
+        if(!StringUtils.isEmpty(loginVo.getOpenid())) {
+            userInfo = this.getByOpenid(loginVo.getOpenid());
+            if(null != userInfo) {
+                userInfo.setPhone(loginVo.getPhone());
+                this.updateById(userInfo);
+            } else {
+                throw new MmaException(ResultCodeEnum.DATA_ERROR);
+            }
+        }
+
         return map;
     }
 

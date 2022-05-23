@@ -41,16 +41,17 @@ public class SmsApiController {
             @ApiParam(name = "phone", value = "手机", required = true)
             @PathVariable String phone) {
         String code = redisTemplate.opsForValue().get(phone);
-        if(!StringUtils.isEmpty(code)) return Result.ok();
+        if(!StringUtils.isEmpty(code))
+            return Result.ok();
 
         code = RandomUtil.getSixBitRandom();
-        Map<String,Object> param = new HashMap<>();
-        param.put("code", code);
-        boolean isSend = smsService.send(phone, "SMS_187220125", param);
-        if(isSend) {
-            redisTemplate.opsForValue().set(phone, code, 2, TimeUnit.MINUTES);
+        boolean isSend = smsService.send(phone, code);
+
+        if(isSend){
+            redisTemplate.opsForValue().set(phone, code,5, TimeUnit.MINUTES);
             return Result.ok();
         }
+
         return Result.fail().message("发送短信失败");
     }
 }

@@ -9,7 +9,6 @@ import java.util.Map;
  */
 public interface SmsService {
 
-    boolean send(String PhoneNumbers, String templateCode, Map<String,Object> param);
+    boolean send(String phone, String code);
 
-    boolean send(MsmVo msmVo);
 }

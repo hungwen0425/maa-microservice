@@ -1,14 +1,13 @@
 package com.atguigu.yygh.hosp.service.impl;
 
 import com.atguigu.yygh.common.constant.MqConst;
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.common.service.RabbitService;
 import com.atguigu.yygh.common.util.MD5;
 import com.atguigu.yygh.hosp.mapper.HospitalSetMapper;
 import com.atguigu.yygh.hosp.service.HospitalSetService;
 import com.atguigu.yygh.model.hosp.HospitalSet;
-import com.atguigu.yygh.model.user.UserInfo;
 import com.atguigu.yygh.vo.hosp.HospitalSetQueryVo;
 import com.atguigu.yygh.vo.msm.MsmVo;
 import com.atguigu.yygh.vo.order.SignInfoVo;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -43,7 +41,7 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
 	public boolean save(HospitalSet hospitalSet) {
 		int count = hospitalSetMapper.selectCount(new QueryWrapper<HospitalSet>().eq("hoscode", hospitalSet.getHoscode()));
 		if(count > 0) {
-			throw new YyghException(ResultCodeEnum.HOSCODE_EXIST);
+			throw new MmaException(ResultCodeEnum.HOSCODE_EXIST);
 		}
 		//自定义生成
 		Random random = new Random();
@@ -84,10 +82,10 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
 	public String getSignKey(String hoscode) {
 		HospitalSet hospitalSet = this.getByHoscode(hoscode);
 		if(null == hospitalSet) {
-			throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);
+			throw new MmaException(ResultCodeEnum.HOSPITAL_OPEN);
 		}
 		if(hospitalSet.getStatus().intValue() == 0) {
-			throw new YyghException(ResultCodeEnum.HOSPITAL_LOCK);
+			throw new MmaException(ResultCodeEnum.HOSPITAL_LOCK);
 		}
 		return hospitalSet.getSignKey();
 	}
@@ -105,7 +103,7 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
 	public SignInfoVo getSignInfoVo(String hoscode) {
 		HospitalSet hospitalSet = this.getByHoscode(hoscode);
 		if(null == hospitalSet) {
-			throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);
+			throw new MmaException(ResultCodeEnum.HOSPITAL_OPEN);
 		}
 		SignInfoVo signInfoVo = new SignInfoVo();
 		signInfoVo.setApiUrl(hospitalSet.getApiUrl());

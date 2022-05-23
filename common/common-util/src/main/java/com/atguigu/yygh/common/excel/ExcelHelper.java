@@ -1,7 +1,7 @@
 package com.atguigu.yygh.common.excel;
 
 import com.alibaba.excel.EasyExcel;
-import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.exception.MmaException;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +30,7 @@ public class ExcelHelper<T> {
             list = listener.getDatas();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new MmaException(ResultCodeEnum.DATA_ERROR);
         }
         return list;
     }
@@ -47,7 +47,7 @@ public class ExcelHelper<T> {
             EasyExcel.write(response.getOutputStream(), clazz).sheet(curFileName).doWrite(list);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new MmaException(ResultCodeEnum.DATA_ERROR);
         }
     }
 }

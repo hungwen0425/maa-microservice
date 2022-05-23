@@ -20,3 +20,13 @@ aliyun:
     regionId: default
     accessKeyId: LTAI0YbQf3pX8WqC
     secret: jX8D04DmDI3gGKjW5kaFYSzugfqmmT
+
+#互动资通短信
+mma:
+  sms:
+    sendSMSUrl: http://api.every8d.com/API21/HTTP/sendSMS.ashx
+    getCreditUrl: http://api.every8d.com/API21/HTTP/getCredit.ashx
+    credit: 0
+    userID: 0986052168
+    password: dgb7
+    subject: 预约挂号统一平台验证码：
