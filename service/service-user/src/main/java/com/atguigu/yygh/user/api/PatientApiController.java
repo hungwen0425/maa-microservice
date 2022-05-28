@@ -57,7 +57,8 @@ public class PatientApiController {
 	public Result remove(
 			@ApiParam(name = "id", value = "就诊人id", required = true)
 			@PathVariable Long id) {
-		return Result.ok(patientService.removeById(id));
+		patientService.removeById(id);
+		return Result.ok();
 	}
 
 	@ApiOperation(value = "获取就诊人")

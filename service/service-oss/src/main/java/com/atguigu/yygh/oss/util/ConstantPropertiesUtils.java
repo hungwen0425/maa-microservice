@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConstantPropertiesUtils implements InitializingBean {
 
-    @Value("${aliyun.oss.file.endpoint}")
+    @Value("${aliyun.oss.endpoint}")
     private String endpoint;
 
-    @Value("${aliyun.oss.file.keyid}")
+    @Value("${aliyun.oss.keyid}")
     private String keyId;
 
-    @Value("${aliyun.oss.file.keysecret}")
+    @Value("${aliyun.oss.keysecret}")
     private String keySecrect;
 
-    @Value("${aliyun.oss.file.bucketname}")
+    @Value("${aliyun.oss.bucketname}")
     private String bucketName;
 
     public static String END_POINT;

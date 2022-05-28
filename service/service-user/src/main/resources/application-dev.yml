@@ -53,6 +53,6 @@ wx:
 #    app_secret: 2cf9a4a81b6151d560e9bbc625c3297b
 #    # 微信开放平台 重定向url（需要在微信开放平台配置）
 #    redirect_url: http://guli.shop/api/ucenter/wx/callback
-yygh:
+mma:
   #预约挂号平台baserul
   baseUrl: http://localhost:3000

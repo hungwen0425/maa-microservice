@@ -4,14 +4,11 @@ package com.atguigu.yygh.user.api;
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.common.util.AuthContextHolder;
 import com.atguigu.yygh.common.util.IpUtil;
-import com.atguigu.yygh.model.user.UserInfo;
 import com.atguigu.yygh.user.service.UserInfoService;
 import com.atguigu.yygh.vo.user.LoginVo;
-import com.atguigu.yygh.vo.user.RegisterVo;
 import com.atguigu.yygh.vo.user.UserAuthVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +39,8 @@ public class UserInfoApiController {
     }
 
     @ApiOperation(value = "会员认证")
-    @PostMapping("auth/userAuah")
-    public Result userAuah(@RequestBody UserAuthVo userAuthVo, HttpServletRequest request) {
+    @PostMapping("auth/userAuth")
+    public Result userAuth(@RequestBody UserAuthVo userAuthVo, HttpServletRequest request) {
         userInfoService.userAuah(AuthContextHolder.getUserId(request),userAuthVo);
         return Result.ok();
     }
