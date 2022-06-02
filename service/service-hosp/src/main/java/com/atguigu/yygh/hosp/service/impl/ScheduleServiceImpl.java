@@ -95,7 +95,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public Map<String, Object> getScheduleRule(int page, int limit, String hoscode, String depcode) {
+		//根據 hoscode 與 deptcodde 做查詢
 		Criteria criteria = Criteria.where("hoscode").is(hoscode).and("depcode").is(depcode);
+		// 根據 workDate 做分組
 		Aggregation agg = Aggregation.newAggregation(
 				Aggregation.match(criteria),
 				Aggregation.group("workDate")//分组字段
@@ -103,23 +105,30 @@ public class ScheduleServiceImpl implements ScheduleService {
 						.count().as("docCount")
 						.sum("availableNumber").as("availableNumber")
 						.sum("reservedNumber").as("reservedNumber"),
-				Aggregation.sort(Sort.by(Sort.Direction.DESC, "workDate")),  // 排序
-				Aggregation.skip((page-1)*limit),
+				// 排序
+				Aggregation.sort(Sort.by(Sort.Direction.DESC, "workDate")),
+				// 分頁
+				Aggregation.skip((page-1) * limit),
 				Aggregation.limit(limit)
 		);
-		AggregationResults<BookingScheduleRuleVo> aggregationResults = mongoTemplate.aggregate(agg, Schedule.class, BookingScheduleRuleVo.class);
-		List<BookingScheduleRuleVo> bookingScheduleRuleVoList = aggregationResults.getMappedResults();
 
-		// 分组查询分组后的总记录数
+		//調用方法執行
+		AggregationResults<BookingScheduleRuleVo> aggResults =
+				mongoTemplate.aggregate(agg, Schedule.class, BookingScheduleRuleVo.class);
+		List<BookingScheduleRuleVo> bookingScheduleRuleVoList = aggResults.getMappedResults();
+
+		//分组查询后的总记录数
 		Aggregation totalAgg = Aggregation.newAggregation(
 				Aggregation.match(criteria),     //查询条件
 				Aggregation.group("workDate")      //分组条件
 		);
-		AggregationResults<BookingScheduleRuleVo> totalAggregationResults = mongoTemplate.aggregate(totalAgg, Schedule.class, BookingScheduleRuleVo.class);
+
+		//調用方法執行
+		AggregationResults<BookingScheduleRuleVo> totalAggregationResults =
+				mongoTemplate.aggregate(totalAgg, Schedule.class, BookingScheduleRuleVo.class);
 		int total = totalAggregationResults.getMappedResults().size();
 
-		//获取可预约排班规则
-		//List<BookingScheduleRuleVo> bookingScheduleRuleVoList = new ArrayList<>();
+		//获取 workDate 是星期幾
 		for(BookingScheduleRuleVo bookingScheduleRuleVo : bookingScheduleRuleVoList) {
 			//计算当前预约日期为周几
 			String dayOfWeek = this.getDayOfWeek(new DateTime(bookingScheduleRuleVo.getWorkDate()));

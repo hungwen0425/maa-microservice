@@ -88,18 +88,15 @@ public class HospitalApiController {
 	public Result getBookingSchedule(
 			@ApiParam(name = "page", value = "当前页码", required = true)
 			@PathVariable Integer page,
-
 			@ApiParam(name = "limit", value = "每页记录数", required = true)
 			@PathVariable Integer limit,
-
 			@ApiParam(name = "hoscode", value = "医院code", required = true)
 			@PathVariable String hoscode,
-
 			@ApiParam(name = "depcode", value = "科室code", required = true)
 			@PathVariable String depcode) {
+
 		return Result.ok(scheduleService.getBookingScheduleRule(page, limit, hoscode, depcode));
 	}
-
 
 	@ApiOperation(value = "获取排班数据")
 	@GetMapping("auth/findScheduleList/{hoscode}/{depcode}/{workDate}")

@@ -22,7 +22,7 @@ public class JwtHelper {
                 .compact();
         return token;
     }
-
+    //根據 token 得到 userId
     public static Long getUserId(String token) {
         if(StringUtils.isEmpty(token)) return null;
 
@@ -32,7 +32,7 @@ public class JwtHelper {
         return userId.longValue();
         // return 1L;
     }
-
+    //根據 token 得到 userName
     public static String getUserName(String token) {
         if(StringUtils.isEmpty(token)) return "";
 

@@ -78,21 +78,21 @@ public class DepartmentServiceImpl implements DepartmentService {
 		departmentQuery.setHoscode(hoscode);
 		Example example = Example.of(departmentQuery);
 		Sort sort = Sort.by(Sort.Direction.ASC, "createTime");
+		//所有科室列表
 		List<Department> departmentList = departmentRepository.findAll(example, sort);
 
-		//根据大科室code分组，获取大科室code与下级科室列表
-		Map<String, List<Department>> department1Map = departmentList.stream().collect(Collectors.groupingBy(Department::getBigcode));
+		//根据大科室 bigcode 分组，並获取大科室下级科室列表
+		Map<String, List<Department>> department1Map =
+				departmentList.stream().collect(Collectors.groupingBy(Department::getBigcode));
 		for(Map.Entry<String, List<Department>> entry : department1Map.entrySet()){
-			//大科室code
+			//大科室 bigcode
 			String bigcode = entry.getKey();
-			//大科室code对应的全部数据（二级数据）
+			//大科室 bigcode 对应的全部数据（二级数据）
 			List<Department> department1List = entry.getValue();
-
 			//大科室
 			DepartmentVo departmentVo1 = new DepartmentVo();
 			departmentVo1.setDepcode(bigcode);
 			departmentVo1.setDepname(department1List.get(0).getBigname());
-
 			//小科室
 			List<DepartmentVo> children = new ArrayList<>();
 			for(Department department : department1List) {

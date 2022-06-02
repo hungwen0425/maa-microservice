@@ -59,8 +59,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         String code = loginVo.getCode();
 
         //校验参数
-        if(StringUtils.isEmpty(phone) ||
-                StringUtils.isEmpty(code)) {
+        if(StringUtils.isEmpty(phone) || StringUtils.isEmpty(code)) {
             throw new MmaException(ResultCodeEnum.PARAM_ERROR);
         }
 
@@ -134,7 +133,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void userAuah(Long userId, UserAuthVo userAuthVo) {
+    public void userAuth(Long userId, UserAuthVo userAuthVo) {
         UserInfo userInfo = this.getById(userId);
         userInfo.setName(userAuthVo.getName());
         userInfo.setCertificatesType(userAuthVo.getCertificatesType());

@@ -35,7 +35,7 @@ public interface UserInfoService extends IService<UserInfo> {
      * @param userId
      * @param userAuthVo
      */
-    void userAuah(Long userId, UserAuthVo userAuthVo);
+    void userAuth(Long userId, UserAuthVo userAuthVo);
 
 
     /**
