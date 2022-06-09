@@ -49,7 +49,7 @@ public class HospitalReceiver {
         //发送短信
         MsmVo msmVo = orderMqVo.getMsmVo();
         if(null != msmVo) {
-            rabbitService.sendMessage(MqConst.QUEUE_MSM_ITEM, MqConst.ROUTING_MSM_ITEM, msmVo);
+            rabbitService.sendMessage(MqConst.QUEUE_MSM_ITEM, MqConst.EXCHANGE_DIRECT_MSM, msmVo);
             System.out.println("mq test");
         }
     }

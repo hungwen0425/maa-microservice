@@ -175,7 +175,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 
 			orderMqVo.setMsmVo(msmVo);
 			//發送給 mq
-			rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_ORDER, MqConst.ROUTING_ORDER, orderMqVo);
+			rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_MSM, MqConst.ROUTING_ORDER, orderMqVo);
 		} else {
 			throw new MmaException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
 		}
