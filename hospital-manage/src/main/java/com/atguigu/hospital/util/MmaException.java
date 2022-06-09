@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "自定义全局异常类")
-public class YyghException extends RuntimeException {
+public class MmaException extends RuntimeException {
 
     @ApiModelProperty(value = "异常状态码")
     private Integer code;
@@ -21,12 +21,12 @@ public class YyghException extends RuntimeException {
      * @param message
      * @param code
      */
-    public YyghException(String message, Integer code) {
+    public MmaException(String message, Integer code) {
         super(message);
         this.code = code;
     }
 
-    public YyghException(ResultCodeEnum resultCodeEnum) {
+    public MmaException(ResultCodeEnum resultCodeEnum) {
         super(resultCodeEnum.getMessage());
         this.code = resultCodeEnum.getCode();
     }

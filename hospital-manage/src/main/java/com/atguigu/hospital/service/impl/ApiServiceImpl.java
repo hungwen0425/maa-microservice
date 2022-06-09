@@ -9,7 +9,7 @@ import com.atguigu.hospital.model.Schedule;
 import com.atguigu.hospital.service.ApiService;
 import com.atguigu.hospital.util.BeanUtils;
 import com.atguigu.hospital.util.HttpRequestHelper;
-import com.atguigu.hospital.util.YyghException;
+import com.atguigu.hospital.util.MmaException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +107,7 @@ public class ApiServiceImpl implements ApiService {
         if(null != respone && 200 == respone.getIntValue("code")) {
             return true;
         } else {
-            throw new YyghException(respone.getString("message"), 201);
+            throw new MmaException(respone.getString("message"), 201);
         }
     }
 
@@ -130,7 +130,7 @@ public class ApiServiceImpl implements ApiService {
             result.put("pageNum", pageNum);
             result.put("list", jsonObject.getJSONArray("content"));
         } else {
-            throw new YyghException(respone.getString("message"), 201);
+            throw new MmaException(respone.getString("message"), 201);
         }
         return result;
     }
@@ -162,7 +162,7 @@ public class ApiServiceImpl implements ApiService {
             System.out.println(respone.toJSONString());
 
             if(null == respone || 200 != respone.getIntValue("code")) {
-                throw new YyghException(respone.getString("message"), 201);
+                throw new MmaException(respone.getString("message"), 201);
             }
         }
         return true;
@@ -180,7 +180,7 @@ public class ApiServiceImpl implements ApiService {
         if(null != respone && 200 == respone.getIntValue("code")) {
             return true;
         } else {
-            throw new YyghException(respone.getString("message"), 201);
+            throw new MmaException(respone.getString("message"), 201);
         }
     }
 
@@ -203,7 +203,7 @@ public class ApiServiceImpl implements ApiService {
             result.put("pageNum", pageNum);
             result.put("list", jsonObject.getJSONArray("content"));
         } else {
-            throw new YyghException(respone.getString("message"), 201);
+            throw new MmaException(respone.getString("message"), 201);
         }
         return result;
     }
@@ -264,7 +264,7 @@ public class ApiServiceImpl implements ApiService {
             JSONObject respone = HttpRequestHelper.sendRequest(paramMap,this.getApiUrl()+"/api/hosp/saveSchedule");
             System.out.println(respone.toJSONString());
             if(null == respone || 200 != respone.getIntValue("code")) {
-                throw new YyghException(respone.getString("message"), 201);
+                throw new MmaException(respone.getString("message"), 201);
             }
         }
         return false;
@@ -282,7 +282,7 @@ public class ApiServiceImpl implements ApiService {
         if(null != respone && 200 == respone.getIntValue("code")) {
             return true;
         } else {
-            throw new YyghException(respone.getString("message"), 201);
+            throw new MmaException(respone.getString("message"), 201);
         }
     }
 
@@ -342,7 +342,7 @@ public class ApiServiceImpl implements ApiService {
             JSONObject respone = HttpRequestHelper.sendRequest(paramMap,"http://localhost/api/hosp/saveHospital");
             System.out.println(respone.toJSONString());
             if(null == respone || 200 != respone.getIntValue("code")) {
-                throw new YyghException(respone.getString("message"), 201);
+                throw new MmaException(respone.getString("message"), 201);
             }
         }
     }

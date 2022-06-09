@@ -69,11 +69,9 @@ public class OrderApiController {
 	}
 
 	@ApiOperation(value = "创建订单")
-	@PostMapping("auth/submitOrder/{hoscode}/{scheduleId}/{patientId}")
+	@PostMapping("auth/submitOrder/{scheduleId}/{patientId}")
 	@SentinelResource(value = "submitOrder",blockHandler = "submitOrderBlockHandler")
 	public Result submitOrder(
-			@ApiParam(name = "hoscode", value = "医院编号，限流使用", required = true)
-			@PathVariable String hoscode,
 			@ApiParam(name = "scheduleId", value = "排班id", required = true)
 			@PathVariable String scheduleId,
 			@ApiParam(name = "patientId", value = "就诊人id", required = true)
@@ -93,7 +91,7 @@ public class OrderApiController {
 		return Result.build(null,ResultCodeEnum.ORDER_CREATE_ERROR);
 	}
 
-	@ApiOperation(value = "获取分页列表")
+	@ApiOperation(value = "获取分页订单列表")
 	@GetMapping("auth/{page}/{limit}")
 	public Result index(
 		@ApiParam(name = "page", value = "当前页码", required = true)

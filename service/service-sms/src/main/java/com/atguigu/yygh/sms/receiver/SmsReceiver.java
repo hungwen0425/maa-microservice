@@ -21,12 +21,14 @@ public class SmsReceiver {
     @Autowired
     private SmsService smsService;
 
-//    @RabbitListener(bindings = @QueueBinding(
-//            value = @Queue(value = MqConst.QUEUE_MSM_ITEM, durable = "true"),
-//            exchange = @Exchange(value = MqConst.EXCHANGE_DIRECT_MSM),
-//            key = {MqConst.ROUTING_MSM_ITEM}
-//    ))
-//    public void send(MsmVo msmVo, Message message, Channel channel) {
-//        smsService.send(msmVo);
-//    }
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(value = MqConst.QUEUE_MSM_ITEM, durable = "true"),
+            exchange = @Exchange(value = MqConst.EXCHANGE_DIRECT_MSM),
+            key = {MqConst.ROUTING_MSM_ITEM}
+    ))
+
+    public void send(MsmVo msmVo, Message message, Channel channel) {
+
+        smsService.sendMma(msmVo);
+    }
 }

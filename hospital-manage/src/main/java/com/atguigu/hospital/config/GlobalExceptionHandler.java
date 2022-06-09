@@ -1,6 +1,6 @@
 package com.atguigu.hospital.config;
 
-import com.atguigu.hospital.util.YyghException;
+import com.atguigu.hospital.util.MmaException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(YyghException.class)
-    public String error(YyghException e, Model model){
+    @ExceptionHandler(MmaException.class)
+    public String error(MmaException e, Model model){
         model.addAttribute("message", e.getMessage());
         return "error";
     }

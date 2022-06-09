@@ -13,6 +13,10 @@ public class UserAuthVo {
     @TableField("name")
     private String name;
 
+    @ApiModelProperty(value = "暱稱")
+    @TableField("nick_name")
+    private String nickName;
+
     @ApiModelProperty(value = "证件类型")
     @TableField("certificates_type")
     private String certificatesType;

@@ -67,7 +67,7 @@ public class ApiController {
 
 		//签名校验
 //		if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
-//			throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+//			throw new MmaException(ResultCodeEnum.SIGN_ERROR);
 //		}
 
 		hospitalService.save(paramMap);

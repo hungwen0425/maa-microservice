@@ -41,7 +41,7 @@ public class UserInfoApiController {
     @ApiOperation(value = "会员认证")
     @PostMapping("auth/userAuth")
     public Result userAuth(@RequestBody UserAuthVo userAuthVo, HttpServletRequest request) {
-        userInfoService.userAuth(AuthContextHolder.getUserId(request),userAuthVo);
+        userInfoService.userAuth(AuthContextHolder.getUserId(request), userAuthVo);
         return Result.ok();
     }
 

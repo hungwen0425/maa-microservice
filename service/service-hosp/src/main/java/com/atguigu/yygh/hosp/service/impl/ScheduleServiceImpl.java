@@ -50,7 +50,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public void save(Map<String, Object> paramMap) {
 		Schedule schedule = JSONObject.parseObject(JSONObject.toJSONString(paramMap), Schedule.class);
-		Schedule targetSchedule = scheduleRepository.getScheduleByHoscodeAndHosScheduleId(schedule.getHoscode(), schedule.getHosScheduleId());
+		Schedule targetSchedule = scheduleRepository.getScheduleByHoscodeAndHosScheduleId(schedule.getHoscode(),
+																						schedule.getHosScheduleId());
 		if(null != targetSchedule) {
 			//值copy不为null的值，该方法为自定义方法
 			BeanUtils.copyBean(schedule, targetSchedule, Schedule.class);
@@ -100,8 +101,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// 根據 workDate 做分組
 		Aggregation agg = Aggregation.newAggregation(
 				Aggregation.match(criteria),
-				Aggregation.group("workDate")//分组字段
-						.first("workDate").as("workDate")
+				Aggregation.group("workDate").first("workDate").as("workDate")//分组字段
 						.count().as("docCount")
 						.sum("availableNumber").as("availableNumber")
 						.sum("reservedNumber").as("reservedNumber"),
@@ -220,6 +220,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		IPage iPage = this.getListDate(page, limit, bookingRule);
 		//当前页可预约日期
 		List<Date> dateList = iPage.getRecords();
+
 		//获取可预约日期科室剩余预约数
 		Criteria criteria = Criteria.where("hoscode").is(hoscode).and("depcode").is(depcode).and("workDate").in(dateList);
 		Aggregation agg = Aggregation.newAggregation(
@@ -230,15 +231,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 						.sum("availableNumber").as("availableNumber")
 						.sum("reservedNumber").as("reservedNumber")
 		);
-		AggregationResults<BookingScheduleRuleVo> aggregationResults = mongoTemplate.aggregate(agg, Schedule.class, BookingScheduleRuleVo.class);
+
+		AggregationResults<BookingScheduleRuleVo> aggregationResults =
+				mongoTemplate.aggregate(agg, Schedule.class, BookingScheduleRuleVo.class);
 		List<BookingScheduleRuleVo> scheduleVoList = aggregationResults.getMappedResults();
-		//获取科室剩余预约数
 
 		//合并数据 将统计数据ScheduleVo根据“安排日期”合并到BookingRuleVo
 		Map<Date, BookingScheduleRuleVo> scheduleVoMap = new HashMap<>();
 		if(!CollectionUtils.isEmpty(scheduleVoList)) {
-			scheduleVoMap = scheduleVoList.stream().collect(Collectors.toMap(BookingScheduleRuleVo::getWorkDate, BookingScheduleRuleVo -> BookingScheduleRuleVo));
+			scheduleVoMap = scheduleVoList.stream()
+					.collect(
+							Collectors.toMap(BookingScheduleRuleVo::getWorkDate, BookingScheduleRuleVo -> BookingScheduleRuleVo));
 		}
+
 		//获取可预约排班规则
 		List<BookingScheduleRuleVo> bookingScheduleRuleVoList = new ArrayList<>();
 		for(int i=0, len=dateList.size(); i<len; i++) {
@@ -295,7 +300,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		baseMap.put("releaseTime", bookingRule.getReleaseTime());
 		//停号时间
 		baseMap.put("stopTime", bookingRule.getStopTime());
+
 		result.put("baseMap", baseMap);
+
 		return result;
 	}
 
@@ -324,14 +331,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 		//日期分页，由于预约周期不一样，页面一排最多显示7天数据，多了就要分页显示
 		List<Date> pageDateList = new ArrayList<>();
-		int start = (page-1)*limit;
-		int end = (page-1)*limit+limit;
-		if(end >dateList.size()) end = dateList.size();
+		int start = (page-1) * limit;
+		int end = (page-1) * limit + limit;
+
+		if(end >dateList.size())
+			end = dateList.size();
+
 		for (int i = start; i < end; i++) {
 			pageDateList.add(dateList.get(i));
 		}
+
 		IPage<Date> iPage = new com.baomidou.mybatisplus.extension.plugins.pagination.Page(page, 7, dateList.size());
 		iPage.setRecords(pageDateList);
+
 		return iPage;
 	}
 

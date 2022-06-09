@@ -6,6 +6,7 @@ import com.atguigu.yygh.sms.service.SmsService;
 
 import com.atguigu.yygh.vo.msm.MsmVo;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -18,6 +19,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -31,7 +34,7 @@ public class SmsServiceImpl implements SmsService {
     private String sendSMSUrl;
     @Value("${mma.sms.getCreditUrl}")
     private String getCreditUrl;
-//    @Value("${mma.sms.userID}")
+    //    @Value("${mma.sms.userID}")
     private String userID = "0986052168";
     @Value("${mma.sms.password}")
     private String password;
@@ -43,10 +46,13 @@ public class SmsServiceImpl implements SmsService {
     String processMsg = "";
     String batchID = "";
     String sendTime = "";
-    public boolean send(String phone, String code) {
+
+    public boolean send(String phone, String content, String code) {
 
         String subject = "";
-        String content = "雲端商城手機註冊驗證碼：";
+        if(StringUtils.isEmpty(content))
+            content = "雲端商城手機註冊驗證碼：";
+
         String sendTime = "";
 
         if (this.getCredit(userID, password)) {
@@ -66,11 +72,12 @@ public class SmsServiceImpl implements SmsService {
 
     /**
      * 傳送簡訊
-     * @param userID 帳號
+     *
+     * @param userID   帳號
      * @param password 密碼
-     * @param subject 簡訊主旨，主旨不會隨著簡訊內容發送出去。用以註記本次發送之用途。可傳入空字串
-     * @param content 簡訊發送內容
-     * @param mobile 接收人之手機號碼。格式為: +886912345678或09123456789。多筆接收人時，請以半形逗點隔開( , )，如0912345678,0922333444
+     * @param subject  簡訊主旨，主旨不會隨著簡訊內容發送出去。用以註記本次發送之用途。可傳入空字串
+     * @param content  簡訊發送內容
+     * @param mobile   接收人之手機號碼。格式為: +886912345678或09123456789。多筆接收人時，請以半形逗點隔開( , )，如0912345678,0922333444
      * @param sendTime 簡訊預定發送時間。-立即發送：請傳入空字串。-預約發送：請傳入預計發送時間，若傳送時間小於系統接單時間，將不予傳送。
      *                 格式為 YYYYMMDDhhmnss；例如:預約 2009/01/31 15:30:00發送，則傳入20090131153000。若傳歸時間已逾現在之時間，將立即發送。
      * @return true:傳送成功；false:傳送失敗
@@ -105,7 +112,8 @@ public class SmsServiceImpl implements SmsService {
 
     /**
      * 取得帳號餘額
-     * @param userID 帳號
+     *
+     * @param userID   帳號
      * @param password 密碼密碼
      * @return true:取得成功；false:取得失敗
      */
@@ -132,7 +140,7 @@ public class SmsServiceImpl implements SmsService {
     private String httpPost(String url, String postData) {
         String result = "";
         try {
-            URL u=new URL(url);
+            URL u = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) u.openConnection();
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -146,12 +154,12 @@ public class SmsServiceImpl implements SmsService {
             osw.close();
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
-            StringBuilder sb=new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (line = br.readLine(); line != null; line = br.readLine()) {
                 sb.append(line);
             }
             conn.disconnect();
-            result=sb.toString();
+            result = sb.toString();
         } catch (Exception ex) {
             processMsg = ex.getMessage();
         }
@@ -159,16 +167,19 @@ public class SmsServiceImpl implements SmsService {
     }
 
     /**
-     *
      * @param msmVo
      * @return
      */
-//    @Override
-//    public boolean send(MsmVo msmVo) {
-//        log.info(JSONObject.toJSONString(msmVo));
-//        if(!StringUtils.isEmpty(msmVo.getPhone())) {
-//            return this.send(msmVo.getPhone(), msmVo.getTemplateCode(), msmVo.getParam());
-//        }
-//        return false;
-//    }
+    public boolean sendMma(MsmVo msmVo) {
+        log.info(JSONObject.toJSONString(msmVo));
+        if (!StringUtils.isEmpty(msmVo.getPhone())) {
+            String content = msmVo.getParam().get("title")
+                    + msmVo.getParam().get("amount").toString()
+                    + msmVo.getParam().get("reserveDate")
+                    + msmVo.getParam().get("reserveDate")
+                    + msmVo.getParam().get("name") + msmVo.getParam().get("quitTime");
+            return this.send(msmVo.getPhone(), content, null);
+        }
+        return false;
+    }
 }

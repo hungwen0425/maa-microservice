@@ -141,6 +141,7 @@ public class WeixinServiceImpl implements WeixinService {
 			PaymentInfo paymentInfoQuery = paymentService.getPaymentInfo(orderId, PaymentTypeEnum.WEIXIN.getStatus());
 
 			RefundInfo refundInfo = refundInfoService.saveRefundInfo(paymentInfoQuery);
+			//判斷訂單是否已經退款
 			if(refundInfo.getRefundStatus().intValue() == RefundStatusEnum.REFUND.getStatus().intValue()) {
 				return true;
 			}
@@ -157,7 +158,7 @@ public class WeixinServiceImpl implements WeixinService {
 			paramMap.put("total_fee","1");
 			paramMap.put("refund_fee","1");
 			String paramXml = WXPayUtil.generateSignedXml(paramMap,ConstantPropertiesUtils.PARTNERKEY);
-
+			//設置微信api
 			HttpClient client = new HttpClient("https://api.mch.weixin.qq.com/secapi/pay/refund");
 			client.setXmlParam(paramXml);
 			client.setHttps(true);

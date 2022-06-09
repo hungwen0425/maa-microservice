@@ -10,6 +10,7 @@ public class MQConfig {
 
     @Bean
     public MessageConverter messageConverter(){
+
         return new Jackson2JsonMessageConverter();
     }
 }

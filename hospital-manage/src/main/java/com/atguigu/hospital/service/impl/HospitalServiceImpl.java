@@ -11,7 +11,7 @@ import com.atguigu.hospital.service.ApiService;
 import com.atguigu.hospital.service.HospitalService;
 import com.atguigu.hospital.util.HttpRequestHelper;
 import com.atguigu.hospital.util.ResultCodeEnum;
-import com.atguigu.hospital.util.YyghException;
+import com.atguigu.hospital.util.MmaException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -58,13 +58,13 @@ public class HospitalServiceImpl implements HospitalService {
 
         Schedule schedule = this.getSchedule(hosScheduleId);
         if(null == schedule) {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new MmaException(ResultCodeEnum.DATA_ERROR);
         }
 
         if(!schedule.getHoscode().equals(hoscode)
                 || !schedule.getDepcode().equals(depcode)
                 || !schedule.getAmount().toString().equals(amount)) {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new MmaException(ResultCodeEnum.DATA_ERROR);
         }
 
         //就诊人信息
@@ -108,7 +108,7 @@ public class HospitalServiceImpl implements HospitalService {
             //排班剩余预约数
             resultMap.put("availableNumber", schedule.getAvailableNumber());
         } else {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new MmaException(ResultCodeEnum.DATA_ERROR);
         }
         return resultMap;
     }
@@ -120,7 +120,7 @@ public class HospitalServiceImpl implements HospitalService {
 
         OrderInfo orderInfo = orderInfoMapper.selectById(hosRecordId);
         if(null == orderInfo) {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new MmaException(ResultCodeEnum.DATA_ERROR);
         }
         //已支付
         orderInfo.setOrderStatus(1);
@@ -135,7 +135,7 @@ public class HospitalServiceImpl implements HospitalService {
 
         OrderInfo orderInfo = orderInfoMapper.selectById(hosRecordId);
         if(null == orderInfo) {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new MmaException(ResultCodeEnum.DATA_ERROR);
         }
         //已取消
         orderInfo.setOrderStatus(-1);

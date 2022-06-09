@@ -9,7 +9,6 @@ spring:
   rabbitmq:
     host: 192.168.56.10
     port: 5672
-    virtual-host: /
     username: guest
     password: guest
   redis:

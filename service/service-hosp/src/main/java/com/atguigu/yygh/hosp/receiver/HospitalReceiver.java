@@ -50,6 +50,7 @@ public class HospitalReceiver {
         MsmVo msmVo = orderMqVo.getMsmVo();
         if(null != msmVo) {
             rabbitService.sendMessage(MqConst.QUEUE_MSM_ITEM, MqConst.ROUTING_MSM_ITEM, msmVo);
+            System.out.println("mq test");
         }
     }
 

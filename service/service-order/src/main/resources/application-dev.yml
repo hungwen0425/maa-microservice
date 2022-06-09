@@ -22,7 +22,6 @@ spring:
   rabbitmq:
     host: 192.168.56.10
     port: 5672
-    virtual-host: /
     username: guest
     password: guest
   datasource:
@@ -45,6 +44,8 @@ spring:
   redis:
     host: 192.168.56.10
 
+
+
 # 微信
 #weixin:
 #  appid: wx8397f8696b538317
@@ -56,4 +57,4 @@ weixin:
   partner: 1558950191T6m9iK73b0kn9g
   partnerkey: 5v426MKfHQH7X8rKwb
   notifyurl: http://qyben.free.idcfengye.com/api/order/weixin/notify
-  cert: C:\Users\lfy\Desktop\yygh-parent\service\service-order\src\main\resources\apiclient_cert.p12h-parent\service\service-order\src\main\resources\apiclient_cert.p12
+  cert: D:\\git3\\maa-microservice\\service\\service-order\\src\\main\\resources\\cert\\apiclient_cert.p12

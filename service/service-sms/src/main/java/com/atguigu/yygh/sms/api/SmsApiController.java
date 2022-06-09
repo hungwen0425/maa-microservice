@@ -45,7 +45,7 @@ public class SmsApiController {
             return Result.ok();
 
         code = RandomUtil.getSixBitRandom();
-        boolean isSend = smsService.send(phone, code);
+        boolean isSend = smsService.send(phone, null, code);
 
         if(isSend){
             redisTemplate.opsForValue().set(phone, code,5, TimeUnit.MINUTES);

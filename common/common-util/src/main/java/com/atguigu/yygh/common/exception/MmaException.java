@@ -38,7 +38,7 @@ public class MmaException extends RuntimeException {
 
     @Override
     public String toString() {
-        return "YyghException{" +
+        return "MmaException{" +
                 "code=" + code +
                 ", message=" + this.getMessage() +
                 '}';

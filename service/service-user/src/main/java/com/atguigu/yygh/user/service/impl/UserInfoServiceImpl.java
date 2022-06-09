@@ -96,7 +96,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         Map<String, Object> map = new HashMap<>();
         String name = userInfo.getName();
         if(StringUtils.isEmpty(name)) {
-            name = userInfo.getNickName();
+            name = userInfo.getName();
         }
         if(StringUtils.isEmpty(name)) {
             name = userInfo.getPhone();
@@ -136,6 +136,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     public void userAuth(Long userId, UserAuthVo userAuthVo) {
         UserInfo userInfo = this.getById(userId);
         userInfo.setName(userAuthVo.getName());
+        userInfo.setNickName(userAuthVo.getNickName());
         userInfo.setCertificatesType(userAuthVo.getCertificatesType());
         userInfo.setCertificatesNo(userAuthVo.getCertificatesNo());
         userInfo.setCertificatesUrl(userAuthVo.getCertificatesUrl());
@@ -173,6 +174,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         }
     }
 
+    //用戶查看
     @Override
     public Map<String, Object> show(Long userId) {
         Map<String, Object>  map = new HashMap();
@@ -186,6 +188,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         return map;
     }
 
+    //用戶審批
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void approval(Long userId, Integer authStatus) {

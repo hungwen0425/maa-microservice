@@ -125,9 +125,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 		String sign = HttpRequestHelper.getSign(paramMap, signInfoVo.getSignKey());
 		paramMap.put("sign", sign);
 
-		log.info("参数：" + JSONObject.toJSONString(paramMap));
+//		log.info("参数：" + JSONObject.toJSONString(paramMap));
 		JSONObject result = HttpRequestHelper.sendRequest(paramMap, signInfoVo.getApiUrl()+"/order/submitOrder");
+//		result,setInteger
 		log.info("结果：" + result.toJSONString());
+
 		if(result.getInteger("code") == 200) {
 			JSONObject jsonObject = result.getJSONObject("data");
 			//预约记录唯一标识（医院预约记录主键）
@@ -160,7 +162,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 			//短信提示
 			MsmVo msmVo = new MsmVo();
 			msmVo.setPhone(orderInfo.getPatientPhone());
-			msmVo.setTemplateCode("SMS_194640721");
+
 			String reserveDate = new DateTime(orderInfo.getReserveDate()).toString("yyyy-MM-dd") + (orderInfo.getReserveTime()==0 ? "上午" : "下午");
 			Map<String,Object> param = new HashMap<String,Object>(){{
 				put("title", orderInfo.getHosname()+"|"+orderInfo.getDepname()+"|"+orderInfo.getTitle());
@@ -172,6 +174,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 			msmVo.setParam(param);
 
 			orderMqVo.setMsmVo(msmVo);
+			//發送給 mq
 			rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_ORDER, MqConst.ROUTING_ORDER, orderMqVo);
 		} else {
 			throw new MmaException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
@@ -283,7 +286,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
 			//短信提示
 			MsmVo msmVo = new MsmVo();
 			msmVo.setPhone(orderInfo.getPatientPhone());
-			msmVo.setTemplateCode("SMS_194610736");
 			String reserveDate = new DateTime(orderInfo.getReserveDate()).toString("yyyy-MM-dd") + (orderInfo.getReserveTime()==0 ? "上午" : "下午");
 			Map<String,Object> param = new HashMap<String,Object>(){{
 				put("title", orderInfo.getHosname()+"|"+orderInfo.getDepname()+"|"+orderInfo.getTitle());
