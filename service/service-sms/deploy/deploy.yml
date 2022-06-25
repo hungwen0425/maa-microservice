@@ -4,7 +4,7 @@ metadata:
   labels:
     app: service-sms
   name: service-sms
-  namespace: his   #一定要写名称空间
+  namespace: maa   #一定要写名称空间
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -53,7 +53,7 @@ metadata:
   labels:
     app: service-sms
   name: service-sms
-  namespace: his
+  namespace: maa
 spec:
   ports:
     - name: http
