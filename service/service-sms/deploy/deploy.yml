@@ -22,9 +22,9 @@ spec:
         app: service-sms
     spec:
       imagePullSecrets:
-        - name: aliyun-docker-hub  #提前在项目下配置访问阿里云的账号密码
+        - name: docker-hub  #提前在项目下配置访问阿里云的账号密码
       containers:
-        - image: $REGISTRY/$ALIYUNHUB_NAMESPACE/service-sms:SNAPSHOT-$BUILD_NUMBER
+        - image: $REGISTRY/$DOCKERHUB_NAMESPACE/service-sms:SNAPSHOT-$BUILD_NUMBER
  #         readinessProbe:
  #           httpGet:
  #             path: /actuator/health
