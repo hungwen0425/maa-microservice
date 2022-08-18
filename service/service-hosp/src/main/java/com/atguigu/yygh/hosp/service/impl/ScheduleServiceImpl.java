@@ -239,8 +239,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		//合并数据 将统计数据ScheduleVo根据“安排日期”合并到BookingRuleVo
 		Map<Date, BookingScheduleRuleVo> scheduleVoMap = new HashMap<>();
 		if(!CollectionUtils.isEmpty(scheduleVoList)) {
-			scheduleVoMap = scheduleVoList.stream()
-					.collect(
+			scheduleVoMap = scheduleVoList.stream().collect(
 							Collectors.toMap(BookingScheduleRuleVo::getWorkDate, BookingScheduleRuleVo -> BookingScheduleRuleVo));
 		}
 

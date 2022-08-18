@@ -3,7 +3,7 @@ LABEL maintainer=TsengHungWen
 
 
 #启动自行加载   服务名-prod.yml配置
-ENV PARAMS="--server.port=8080 --spring.profiles.active=prod --spring.cloud.nacos.server-addr=maa-nacos.maa:8848 --spring.cloud.nacos.config.file-extension=yml"
+ENV PARAMS="--server.port=8080 --spring.profiles.active=prod --spring.cloud.nacos.server-addr=maa-nocos.maa:8848 --spring.cloud.nacos.config.file-extension=yml"
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
 COPY target/*.jar /app.jar
