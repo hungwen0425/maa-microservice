@@ -1,6 +1,4 @@
-# mma-microservice
-# 尚醫通
-
+# 尚醫通 mma-microservice
 
 ## 技術棧：
 ### 後端
