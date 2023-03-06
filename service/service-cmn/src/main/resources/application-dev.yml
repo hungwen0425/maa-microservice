@@ -7,7 +7,7 @@ management:
     health:
       show-details: always
 server:
-  port: 8202
+  port: 8080
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
